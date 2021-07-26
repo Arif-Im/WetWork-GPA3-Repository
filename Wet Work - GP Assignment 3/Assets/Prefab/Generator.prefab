@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6852510203358868984
+--- !u!1 &4426255161181155960
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2834278206719754347}
-  - component: {fileID: 4407432350257984566}
-  - component: {fileID: 8597176314521008124}
-  - component: {fileID: 5874680950721213903}
-  - component: {fileID: 5141347638675575512}
+  - component: {fileID: 4426255161181155967}
+  - component: {fileID: 4426255161181155966}
+  - component: {fileID: 4426255161181155961}
+  - component: {fileID: 4426255161181155965}
+  - component: {fileID: 4426255161181155964}
   m_Layer: 0
-  m_Name: Water Bullet
+  m_Name: Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2834278206719754347
+--- !u!4 &4426255161181155967
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6852510203358868984}
+  m_GameObject: {fileID: 4426255161181155960}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -6.25, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4407432350257984566
+--- !u!212 &4426255161181155966
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6852510203358868984}
+  m_GameObject: {fileID: 4426255161181155960}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -70,11 +70,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -442508499
-  m_SortingLayer: 4
-  m_SortingOrder: 3
+  m_SortingLayerID: -825600309
+  m_SortingLayer: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bc9b28131ee374a4fb7a46369538efd1, type: 3}
-  m_Color: {r: 0.380429, g: 0.7830189, b: 0.77536947, a: 1}
+  m_Color: {r: 0.2559185, g: 0.764151, b: 0.6041144, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -84,27 +84,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8597176314521008124
+--- !u!114 &4426255161181155961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6852510203358868984}
+  m_GameObject: {fileID: 4426255161181155960}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d46820cc2f35249a26ecb5e3a9058e, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cec9c9bf72a0a84c93396fb86d717ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterBulletDamage: 2
---- !u!50 &5874680950721213903
+  health: 10
+--- !u!50 &4426255161181155965
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6852510203358868984}
+  m_GameObject: {fileID: 4426255161181155960}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -118,17 +118,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &5141347638675575512
+--- !u!61 &4426255161181155964
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6852510203358868984}
+  m_GameObject: {fileID: 4426255161181155960}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

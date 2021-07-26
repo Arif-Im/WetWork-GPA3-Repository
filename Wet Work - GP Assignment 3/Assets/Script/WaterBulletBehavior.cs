@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class WaterBulletBehavior : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Damage")]
+    [SerializeField] float waterBulletDamage = 2;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if(collision.GetComponent<GeneratorHealth>())
+        {
+            GeneratorHealth generator = collision.gameObject.GetComponent<GeneratorHealth>();
+            generator.GetDamage(waterBulletDamage);
+            Destroy(this.gameObject);
+        }
     }
 }

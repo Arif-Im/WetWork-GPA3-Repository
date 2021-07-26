@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Stats")]
     [SerializeField] float movementSpeed = 10;
-    [SerializeField] float minX = 2, minY = 2, maxX = 5, maxY = 5;
 
     Rigidbody2D myRigidbody2D;
 
