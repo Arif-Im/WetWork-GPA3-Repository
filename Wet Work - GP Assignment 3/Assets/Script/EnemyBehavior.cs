@@ -5,8 +5,7 @@ using UnityEngine.Video;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    [Header("Rigidbody")]
-    [SerializeField] Rigidbody2D enemyRigidbody2D;
+    Rigidbody2D enemyRigidbody2D;
 
     [Header("Raycast")]
     [SerializeField] int layerMaskIndex = 8;
@@ -14,12 +13,19 @@ public class EnemyBehavior : MonoBehaviour
     [Header("Bullets")]
     [SerializeField] BulletPool bulletPool;
     [SerializeField] float bulletSpeed = 5f;
+    [SerializeField] float startingTimeBetweenAttack = 1f;
+    float timeBetweenAttack = 0;
+
+    [Header("Turret")]
+    [SerializeField] Vector2 idleTarget;
+    LineRenderer lineRenderer;
 
     PlayerHealth player;
 
     // Start is called before the first frame update
     void Start()
     {
+        lineRenderer = GetComponent<LineRenderer>();
         player = FindObjectOfType<PlayerHealth>();
         enemyRigidbody2D = GetComponent<Rigidbody2D>();
         bulletPool = GetComponent<BulletPool>();
@@ -28,34 +34,52 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        lineRenderer.SetPosition(0, transform.position);
     }
 
     private void FixedUpdate()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
 
-        if (hit.collider != null && hit.transform.gameObject.layer == layerMaskIndex)
+        if (hit.collider != null)
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.down) * hit.distance, Color.yellow);
-            Debug.Log("Did Hit");
-            Debug.Log("Player Layer: " + hit.transform.gameObject.layer + " Layer Mask: " + layerMaskIndex);
+            if(hit.transform.gameObject.layer == layerMaskIndex)
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(idleTarget) * hit.distance, Color.red);
+                Debug.Log("Did Hit");
+                Debug.Log(hit.distance);
+                Debug.Log("Player Layer: " + hit.transform.gameObject.layer + " Layer Mask: " + layerMaskIndex);
+                Fire();
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(idleTarget) * hit.distance, Color.blue);
+                lineRenderer.SetPosition(0, hit.transform.position);
+            }
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.down) * 1000, Color.white);
+            Debug.DrawRay(transform.position, transform.TransformDirection(idleTarget) * 1000, Color.white);
             Debug.Log("Did not Hit");
         }
     }
 
     void Fire()
     {
-        EnemyBullet enemyBullet = bulletPool.GetPooledBullet();
-        Rigidbody2D bulletRigidbody2D = enemyBullet.GetComponent<Rigidbody2D>();
+        if (timeBetweenAttack <= 0)
+        {
+            EnemyBullet enemyBullet = bulletPool.GetPooledBullet();
+            Rigidbody2D bulletRigidbody2D = enemyBullet.GetComponent<Rigidbody2D>();
 
-        var direction = (transform.position - player.transform.position).normalized;
-        bulletRigidbody2D.velocity = direction * bulletSpeed;
-        //var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            enemyBullet.transform.position = transform.position;
+            enemyBullet.gameObject.SetActive(true);
+            var direction = (transform.position - player.transform.position).normalized;
+            bulletRigidbody2D.velocity = -(direction * bulletSpeed);
+            timeBetweenAttack = startingTimeBetweenAttack;
+        }
+        else
+        {
+            timeBetweenAttack -= Time.deltaTime;
+        }
     }
 }

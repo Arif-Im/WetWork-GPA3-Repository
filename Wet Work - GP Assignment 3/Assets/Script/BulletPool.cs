@@ -17,8 +17,8 @@ public class BulletPool : MonoBehaviour
             }
         }
 
-        EnemyBullet newBullet = Instantiate(bulletPrefab, transform);
-
+        EnemyBullet newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        newBullet.transform.parent = transform;
         bullets.Add(newBullet);
         return newBullet;
     }
