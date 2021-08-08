@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class EnemyBehavior : MonoBehaviour
+//EnemyBehavior is a subclass of StateMachine. StateMachine is derived from Monobehavior. Thus, EnemyBehavior has access to Monobehavior methods.
+public class EnemyBehavior : StateMachine
 {
+    #region Data Field
     Rigidbody2D enemyRigidbody2D;
 
     [Header("Raycast")]
-    [SerializeField] int layerMaskIndex = 8;
+    [SerializeField] public int layerMaskIndex = 8;
 
     [Header("Bullets")]
     [SerializeField] BulletPool bulletPool;
@@ -17,11 +19,13 @@ public class EnemyBehavior : MonoBehaviour
     float timeBetweenAttack = 0;
 
     [Header("Turret")]
-    [SerializeField] Vector2 idleTarget;
-    LineRenderer lineRenderer;
+    [SerializeField] public Vector3 idleTarget;
+    public LineRenderer lineRenderer;
 
     PlayerHealth player;
+    #endregion
 
+    #region Execution
     // Start is called before the first frame update
     void Start()
     {
@@ -46,15 +50,13 @@ public class EnemyBehavior : MonoBehaviour
             if(hit.transform.gameObject.layer == layerMaskIndex)
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(idleTarget) * hit.distance, Color.red);
-                Debug.Log("Did Hit");
-                Debug.Log(hit.distance);
-                Debug.Log("Player Layer: " + hit.transform.gameObject.layer + " Layer Mask: " + layerMaskIndex);
+                lineRenderer.SetPosition(1, hit.transform.position);
                 Fire();
             }
             else
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(idleTarget) * hit.distance, Color.blue);
-                lineRenderer.SetPosition(0, hit.transform.position);
+                lineRenderer.SetPosition(1, transform.position + (idleTarget * hit.distance));
             }
         }
         else
@@ -64,7 +66,7 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
-    void Fire()
+    public void Fire()
     {
         if (timeBetweenAttack <= 0)
         {
@@ -82,4 +84,23 @@ public class EnemyBehavior : MonoBehaviour
             timeBetweenAttack -= Time.deltaTime;
         }
     }
+    #endregion
+
+    #region States
+    public void BeginPatrolState()
+    {
+        StartCoroutine(State.Patrol());
+
+    }
+
+    public void BeginAlertState()
+    {
+        StartCoroutine(State.Alert());
+    }
+
+    public void BeginAttackState()
+    {
+        StartCoroutine(State.Attack());
+    }
+    #endregion
 }
