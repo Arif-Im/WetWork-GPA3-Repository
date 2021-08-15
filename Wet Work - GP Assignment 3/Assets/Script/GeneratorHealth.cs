@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneratorHealth : MonoBehaviour
+public class GeneratorHealth : EnemyHealth
 {
     [Header("Health")]
     [SerializeField] float health = 10;
@@ -16,14 +16,10 @@ public class GeneratorHealth : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-    }
 
-    public void GetDamage(float damage)
+    override public void GetDamage(float damage)
     {
         health -= damage;
-
         if (health <= 0)
         {
             gate.OpenGate();

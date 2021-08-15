@@ -12,6 +12,17 @@ public abstract class StateMachine : MonoBehaviour
     public void SetState(State passedState)
     {
         State = passedState;
-        StartCoroutine(State.Start());
+        if(State != null)
+            StartCoroutine(State.Start());
+    }
+
+    public void SetNewState(State newState)
+    {
+        this.State = newState;
+    }
+
+    public State GetNewState()
+    {
+        return this.State;
     }
 }

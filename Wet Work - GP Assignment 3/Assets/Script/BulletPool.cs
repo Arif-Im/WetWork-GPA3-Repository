@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BulletPool : MonoBehaviour
 {
-    [SerializeField] EnemyBullet bulletPrefab;
-    [SerializeField] List<EnemyBullet> bullets = new List<EnemyBullet>();
+    [SerializeField] Bullet bulletPrefab;
+    [SerializeField] List<Bullet> bullets = new List<Bullet>();
 
-    public EnemyBullet GetPooledBullet()
+    public Bullet GetPooledBullet()
     {
         for(int i = 0; i < bullets.Count; i++)
         {
@@ -17,7 +17,7 @@ public class BulletPool : MonoBehaviour
             }
         }
 
-        EnemyBullet newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        Bullet newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         newBullet.transform.parent = transform;
         bullets.Add(newBullet);
         return newBullet;

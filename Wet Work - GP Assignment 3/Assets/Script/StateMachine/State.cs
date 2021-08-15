@@ -4,24 +4,33 @@ using UnityEngine;
 
 public abstract class State
 {
-    protected EnemyBehavior EnemyBehavior;
+    protected EnemyTurretBehavior EnemyBehavior;
+    protected BossBehavior BossBehavior;
+    protected MovingWallBehavior MovingWallBehavior;
+    protected EnemyTankBehavior EnemyTankBehavior;
 
     protected float distance;
     protected Vector3 targetPosition;
+    protected float timeBetweenStates = 5;
 
-    protected State(EnemyBehavior passedEnemyBehavior)
+    protected State(EnemyTurretBehavior passedEnemyBehavior)
     {
         EnemyBehavior = passedEnemyBehavior;
     }
 
-    public void SetTargetPosition(Vector3 position)
+    protected State(BossBehavior passedBossBehavior)
     {
-        targetPosition = position;
+        BossBehavior = passedBossBehavior;
     }
 
-    public Vector3 GetTargetPosition()
+    protected State(MovingWallBehavior passedMovingWallBehavior)
     {
-        return targetPosition;
+        MovingWallBehavior = passedMovingWallBehavior;
+    }
+
+    protected State(EnemyTankBehavior passedEnemyTankBehavior)
+    {
+        EnemyTankBehavior = passedEnemyTankBehavior;
     }
 
     //The following Coroutines are virtual because they are meant to be overridden. If these Coroutines are not overridden,
@@ -39,6 +48,14 @@ public abstract class State
         yield break;
     }
     public virtual IEnumerator Attack()
+    {
+        yield break;
+    }
+    public virtual IEnumerator MissileGunState()
+    {
+        yield break;
+    }
+    public virtual IEnumerator MachineGunState()
     {
         yield break;
     }
