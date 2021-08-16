@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
         {
             PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
             player.GetDamage(damage);
-            gameObject.SetActive(false);
         }
+        gameObject.SetActive(false);
     }
 }

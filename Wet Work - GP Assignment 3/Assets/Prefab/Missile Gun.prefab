@@ -94,7 +94,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414490479276354073}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -148,7 +148,9 @@ MonoBehaviour:
   machineGuns: []
   missileGuns: []
   startingTimeBetweenShots: 1
-  bulletSpeed: 0
+  minTime: 0.1
+  maxTime: 1
+  bulletSpeed: 10
   bulletPrefab: {fileID: 1272712332319390395, guid: b804d736e7b599d42b69e990965428d3,
     type: 3}
 --- !u!114 &-3769500190743073225

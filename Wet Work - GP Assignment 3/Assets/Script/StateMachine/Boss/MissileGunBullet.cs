@@ -17,6 +17,8 @@ public class MissileGunBullet : Bullet
     // Update is called once per frame
     void FixedUpdate()
     {
-        bulletRigidbody2D.velocity = transform.TransformDirection(player.transform.position - transform.position).normalized * changeTrajectorySpeed * Time.fixedDeltaTime;
+        Vector3 v3 = transform.TransformDirection(player.transform.position - transform.position).normalized * changeTrajectorySpeed * Time.fixedDeltaTime;
+        Vector2 v2 = v3;
+        bulletRigidbody2D.velocity += v2;
     }
 }

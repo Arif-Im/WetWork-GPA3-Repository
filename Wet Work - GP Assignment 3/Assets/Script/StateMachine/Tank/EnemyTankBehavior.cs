@@ -10,7 +10,7 @@ public class EnemyTankBehavior : StateMachine
     int checkpointIndex = 0;
 
     [Header("Movement")]
-    [SerializeField] float movementSpeed = 300f;
+    [SerializeField] float movementSpeed = 3f;
     [HideInInspector] public Vector3 movementDirection;
 
     [Header("Shooting")]
@@ -18,22 +18,35 @@ public class EnemyTankBehavior : StateMachine
     [SerializeField] float bulletSpeed = 5;
     [SerializeField] float startingTimeBetweenShots = 1;
     [SerializeField] Bullet bulletPrefab;
+    [SerializeField] public float rotateSpeed = 50;
 
     [HideInInspector]
     public GateBehavior gate;
 
     float timeBetweenShots = 0;
 
-    Rigidbody2D enemyTankRigidbody2D;
-    PlayerHealth player;
+    [HideInInspector]
+    public Rigidbody2D enemyTankRigidbody2D;
+    [HideInInspector]
+    public PlayerHealth player;
     BulletPool bulletPool;
 
     [HideInInspector]
     public LineRenderer lineRenderer;
 
+    [HideInInspector]
+    public GameObject targetPosition;
+
     // Start is called before the first frame update
     void Start()
     {
+        targetPosition = new GameObject
+        {
+            layer = 2
+        };
+        targetPosition.transform.position = transform.position + new Vector3(0, 5, 0);
+        targetPosition.transform.parent = transform;
+
         enemyTankRigidbody2D = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
         bulletPool = GetComponent<BulletPool>();
@@ -47,19 +60,40 @@ public class EnemyTankBehavior : StateMachine
     void FixedUpdate()
     {
         movementDirection = enemyTankRigidbody2D.velocity.normalized;
-        SetNewState(GetNewState());
+        SetState(GetNewState()); 
+
+        //if (enemyTankRigidbody2D.velocity.x > 0 || enemyTankRigidbody2D.velocity.y > 0)
+        //{
+        //    enemyTankRigidbody2D.velocity *= 0.1f;
+        //}
+        //else if (enemyTankRigidbody2D.velocity.x < 0 || enemyTankRigidbody2D.velocity.y < 0)
+        //{
+        //    enemyTankRigidbody2D.velocity *= 0.1f;
+        //}
     }
 
-    public void MoveEnemyTank()
+    public void MoveEnemyTankPatrol()
     {
-        if(transform.position == checkpoints[checkpointIndex].transform.position)
+        if (Vector2.Distance(transform.position, checkpoints[checkpointIndex].transform.position) <= 0.15f)
         {
-            checkpointIndex++;
+            if (checkpointIndex >= checkpoints.Length - 1)
+            {
+                checkpointIndex = 0;
+            }
+            else
+            {
+                checkpointIndex++;
+            }
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, checkpoints[checkpointIndex].transform.position, movementSpeed);
+            enemyTankRigidbody2D.velocity = transform.TransformDirection(checkpoints[checkpointIndex].transform.position - transform.position).normalized * movementSpeed * Time.fixedDeltaTime;
         }
+    }
+
+    public void MoveEnemyTankAttack()
+    {
+        enemyTankRigidbody2D.velocity = transform.TransformDirection(player.transform.position - transform.position).normalized * movementSpeed * Time.fixedDeltaTime;
     }
 
     public void EnemyTankFire()
@@ -78,6 +112,23 @@ public class EnemyTankBehavior : StateMachine
         else
         {
             timeBetweenShots -= Time.deltaTime;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<WaterBullet>())
+        {
+            WaterBullet waterBullet = collision.gameObject.GetComponent<WaterBullet>();
+            enemyTankRigidbody2D.AddForce(-(waterBullet.transform.position - transform.position) * 500);
+            waterBullet.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<MovingWallBehavior>())
+        {
+            gameObject.SetActive(false);
         }
     }
 }

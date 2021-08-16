@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Stats")]
     [SerializeField] float movementSpeed = 10;
+    [SerializeField] GameObject playerSprite;
 
     Rigidbody2D myRigidbody2D;
 
@@ -28,10 +29,23 @@ public class PlayerMovement : MonoBehaviour
         var deltaY = Input.GetAxis("Vertical") * Time.deltaTime * movementSpeed;
 
         myRigidbody2D.velocity = new UnityEngine.Vector2(deltaX, deltaY);
+
+        Vector2 direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+
+        if(direction != Vector2.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            playerSprite.transform.rotation = Quaternion.RotateTowards(playerSprite.transform.rotation, toRotation, 1000 * Time.fixedDeltaTime);
+        }
     }
 
     public Vector3 GetPlayerVelocity()
     {
         return myRigidbody2D.velocity;
+    }
+
+    public GameObject GetPlayerSprite()
+    {
+        return playerSprite;
     }
 }

@@ -46,8 +46,7 @@ public class EnemyTurretBehavior : StateMachine
         player = FindObjectOfType<PlayerHealth>();
         enemyRigidbody2D = GetComponent<Rigidbody2D>();
         bulletPool = GetComponent<BulletPool>();
-        state = new PatrolState(this);
-        SetNewState(state);
+        SetNewState(new PatrolState(this));
         SetState(GetNewState());
     }
 

@@ -8,6 +8,18 @@ public class SceneLoader : MonoBehaviour
     [Header("Reload")]
     [SerializeField] float loadSceneDuration = 1f;
     [SerializeField] float reloadSceneDuration = 1f;
+    PauseMenu pauseMenu;
+
+    private void Start()
+    {
+        pauseMenu = GetComponent<PauseMenu>();
+    }
+
+    public void MainMenu()
+    {
+        pauseMenu.Resume();
+        SceneManager.LoadScene(0);
+    }
 
     public IEnumerator ReloadScene()
     {

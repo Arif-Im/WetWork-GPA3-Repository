@@ -251,7 +251,7 @@ MonoBehaviour:
   layerMaskIndex: 8
   bulletPool: {fileID: 0}
   bulletSpeed: 5
-  startingTimeBetweenAttack: 1
+  startingTimeBetweenAttack: 0.1
   lineRenderer: {fileID: 0}
   idleTarget: {x: 0, y: -1, z: 0}
   targetPosition: {fileID: 0}

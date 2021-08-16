@@ -31,6 +31,7 @@ public class GunBehavior : BossBehavior
         else
         {
             Bullet enemyBullet = bulletPool.GetPooledBullet();
+            if(enemyBullet == null) { return; }
             Rigidbody2D bulletRigidbody2D = enemyBullet.GetComponent<Rigidbody2D>();
 
             enemyBullet.transform.position = transform.position;

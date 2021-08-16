@@ -7,6 +7,7 @@ TagManager:
   - Machine Gun
   - Missile Gun
   - Heart
+  - PlayerSprite
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - Boss Body
   - Wall
   - PlayerBullet
-  - 
-  - 
+  - Bush
+  - EnemyBullet
   - 
   - 
   - 
@@ -53,9 +54,9 @@ TagManager:
   - name: Player
     uniqueID: 2666856793
     locked: 0
+  - name: Bush
+    uniqueID: 3852458797
+    locked: 0
   - name: Bullet
     uniqueID: 4160692773
-    locked: 0
-  - name: Water
-    uniqueID: 3852458797
     locked: 0

@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  generatorHealthBarPrefab: {fileID: 6468444186204399520, guid: 6eda5d7c24eaabb4c908b03f66435a59,
+    type: 3}
 --- !u!50 &4426255161181155965
 Rigidbody2D:
   serializedVersion: 4
@@ -106,7 +108,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4426255161181155960}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

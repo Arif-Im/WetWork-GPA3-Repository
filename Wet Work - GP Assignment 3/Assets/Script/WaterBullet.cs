@@ -13,8 +13,7 @@ public class WaterBullet : Bullet
         {
             EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
             enemyHealth.GetDamage(waterBulletDamage);
-            gameObject.SetActive(false);
         }
-
+        gameObject.SetActive(false);
     }
 }

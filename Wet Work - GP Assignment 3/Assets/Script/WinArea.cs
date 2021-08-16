@@ -15,6 +15,8 @@ public class WinArea : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerHealth>())
-            sceneLoader.LoadNextScene();
+        {
+            StartCoroutine(sceneLoader.LoadNextScene());
+        }
     }
 }

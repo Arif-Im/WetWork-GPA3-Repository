@@ -26,6 +26,7 @@ public class AlertState : State
         {
             if (hit.transform.gameObject.layer == EnemyBehavior.layerMaskIndex)
             {
+                EnemyBehavior.lineRenderer.enabled = false;
                 EnemyBehavior.SetNewState(new AttackState(EnemyBehavior));
             }
             else

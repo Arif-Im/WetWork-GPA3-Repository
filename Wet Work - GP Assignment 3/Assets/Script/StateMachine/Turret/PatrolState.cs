@@ -24,6 +24,7 @@ public class PatrolState : State
         {
             if (hit.transform.gameObject.layer == EnemyBehavior.layerMaskIndex)
             {
+                EnemyBehavior.lineRenderer.enabled = false;
                 EnemyBehavior.SetNewState(new AttackState(EnemyBehavior));
             }
             else
@@ -31,7 +32,6 @@ public class PatrolState : State
                 Vector2 v2 = EnemyBehavior.transform.position;
                 Debug.DrawRay(EnemyBehavior.transform.position, hit.point - v2, Color.blue);
                 EnemyBehavior.lineRenderer.SetPosition(1, hit.point);
-                Debug.Log(hit.distance);
             }
         }
         else
