@@ -12,8 +12,8 @@ public class TankAttack : State
     override public IEnumerator Start()
     {
         yield return new WaitForSeconds(0);
+        EnemyTankBehavior.lineRenderer.enabled = false;
         EnemyTankBehavior.MoveEnemyTankAttack();
         EnemyTankBehavior.EnemyTankFire();
-        EnemyTankBehavior.lineRenderer.enabled = false;
     }
 }

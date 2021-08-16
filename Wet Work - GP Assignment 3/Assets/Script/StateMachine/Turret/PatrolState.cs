@@ -15,7 +15,15 @@ public class PatrolState : State
         yield return new WaitForSeconds(0);
         RaycastHit2D hit = Physics2D.Raycast(EnemyBehavior.transform.position, EnemyBehavior.idleTarget);
 
-        if(EnemyBehavior.gate.IsGateOpen())
+        var direction = EnemyBehavior.idleTarget;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            EnemyBehavior.enemySprite.transform.rotation = Quaternion.RotateTowards(EnemyBehavior.enemySprite.transform.rotation, toRotation, 1000 * Time.fixedDeltaTime);
+        }
+
+        if (EnemyBehavior.gate.IsGateOpen())
         {
             EnemyBehavior.SetNewState(new AlertState(EnemyBehavior));
         }

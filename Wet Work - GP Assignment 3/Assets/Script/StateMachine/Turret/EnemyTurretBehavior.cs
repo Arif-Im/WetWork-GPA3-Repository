@@ -24,9 +24,9 @@ public class EnemyTurretBehavior : StateMachine
 
     [Header("Turret")]
     [SerializeField] public Vector3 idleTarget;
-    public GameObject targetPosition;
 
-    public GateBehavior gate;
+    [HideInInspector] public GameObject targetPosition;
+    [HideInInspector] public GateBehavior gate;
 
     PlayerHealth player;
     #endregion
@@ -78,9 +78,16 @@ public class EnemyTurretBehavior : StateMachine
 
             enemyBullet.transform.position = transform.position;
             enemyBullet.gameObject.SetActive(true);
-            var direction = (transform.position - player.transform.position).normalized;
-            bulletRigidbody2D.velocity = -(direction * bulletSpeed);
+            shootSound.Play();
+            var direction = (player.transform.position - transform.position).normalized;
+            bulletRigidbody2D.velocity = direction * bulletSpeed;
             timeBetweenAttack = startingTimeBetweenAttack;
+
+            if (direction != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
+                enemySprite.transform.rotation = Quaternion.RotateTowards(enemySprite.transform.rotation, toRotation, 1000 * Time.fixedDeltaTime);
+            }
         }
         else
         {
@@ -96,6 +103,25 @@ public class EnemyTurretBehavior : StateMachine
             enemyRigidbody2D.AddForce(-(waterBullet.transform.position - transform.position) * 500);
             waterBullet.gameObject.SetActive(false);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<MovingWallBehavior>())
+        {
+            KillEnemy();
+        }
+    }
+
+    override public void KillEnemy()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+        lineRenderer.enabled = false;
+        enemySprite.SetActive(false);
+        explosionSound.Play();
+        GameObject explosionEffect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+        Destroy(explosionEffect, 1f);
+        enabled = false;
     }
     #endregion
 }

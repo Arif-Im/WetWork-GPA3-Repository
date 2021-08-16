@@ -9,6 +9,11 @@ public class BossBehavior : StateMachine
     [HideInInspector]
     public List<GunBehavior> missileGuns = new List<GunBehavior>();
 
+    public AudioSource GetShootSound()
+    {
+        return shootSound;
+    }
+
     private void Start()
     {
         foreach(GunBehavior child in transform.GetComponentsInChildren<GunBehavior>())
@@ -29,5 +34,10 @@ public class BossBehavior : StateMachine
     private void FixedUpdate()
     {
         SetState(GetNewState());
+    }
+
+    override public void KillEnemy()
+    {
+
     }
 }

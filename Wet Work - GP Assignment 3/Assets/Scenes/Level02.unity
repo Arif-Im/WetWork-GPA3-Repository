@@ -711,6 +711,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win Area
       objectReference: {fileID: 0}
+    - target: {fileID: 1563429732979288694, guid: 0978296074c3a6449b3ff0a0bbd6c7f1,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1563429732979288695, guid: 0978296074c3a6449b3ff0a0bbd6c7f1,
         type: 3}
       propertyPath: m_LocalPosition.x

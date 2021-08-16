@@ -22,6 +22,14 @@ public class AlertState : State
         EnemyBehavior.targetPosition.transform.RotateAround(EnemyBehavior.transform.position, Vector3.forward, 20f * Time.fixedDeltaTime);
         RaycastHit2D hit = Physics2D.Raycast(EnemyBehavior.transform.position, EnemyBehavior.transform.TransformDirection(EnemyBehavior.targetPosition.transform.position) - EnemyBehavior.transform.position);
 
+        var direction = EnemyBehavior.transform.TransformDirection(EnemyBehavior.targetPosition.transform.position) - EnemyBehavior.transform.position;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            EnemyBehavior.enemySprite.transform.rotation = Quaternion.RotateTowards(EnemyBehavior.enemySprite.transform.rotation, toRotation, 1000 * Time.fixedDeltaTime);
+        }
+
         if (hit.collider != null)
         {
             if (hit.transform.gameObject.layer == EnemyBehavior.layerMaskIndex)

@@ -36,6 +36,7 @@ public class GunBehavior : BossBehavior
 
             enemyBullet.transform.position = transform.position;
             enemyBullet.gameObject.SetActive(true);
+            shootSound.Play();
             bulletRigidbody2D.velocity = transform.TransformDirection(playerPos.transform.position - transform.position).normalized * bulletSpeed;
             timeBetweenShots = Random.Range(minTime, maxTime);
         }

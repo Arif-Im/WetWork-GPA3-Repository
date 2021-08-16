@@ -18,6 +18,14 @@ public class TankAlert : State
         EnemyTankBehavior.targetPosition.transform.RotateAround(EnemyTankBehavior.transform.position, Vector3.forward, EnemyTankBehavior.rotateSpeed * Time.fixedDeltaTime);
         RaycastHit2D hit = Physics2D.Raycast(EnemyTankBehavior.transform.position, EnemyTankBehavior.transform.TransformDirection(EnemyTankBehavior.targetPosition.transform.position) - EnemyTankBehavior.transform.position);
 
+        var direction = EnemyTankBehavior.transform.TransformDirection(EnemyTankBehavior.targetPosition.transform.position) - EnemyTankBehavior.transform.position;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            EnemyTankBehavior.enemySprite.transform.rotation = Quaternion.RotateTowards(EnemyTankBehavior.enemySprite.transform.rotation, toRotation, 1000 * Time.fixedDeltaTime);
+        }
+
         if (hit.collider != null)
         {
             if (hit.transform.gameObject.layer == EnemyTankBehavior.layerMaskIndex && Vector2.Distance(hit.transform.gameObject.transform.position, EnemyTankBehavior.transform.position) <= Vector2.Distance(EnemyTankBehavior.transform.position, EnemyTankBehavior.targetPosition.transform.position))
@@ -26,8 +34,6 @@ public class TankAlert : State
             }
             else
             {
-                //Debug.DrawRay(EnemyTankBehavior.transform.position, EnemyTankBehavior.targetPosition.transform.position - EnemyTankBehavior.transform.position, Color.blue);
-                //EnemyTankBehavior.lineRenderer.SetPosition(1, EnemyTankBehavior.targetPosition.transform.position);
                 if(Vector2.Distance(EnemyTankBehavior.transform.position, hit.point) < Vector2.Distance(EnemyTankBehavior.transform.position, EnemyTankBehavior.targetPosition.transform.position))
                 {
                     Vector2 v2 = EnemyTankBehavior.transform.position;

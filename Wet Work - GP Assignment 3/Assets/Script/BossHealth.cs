@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossHealth : MonoBehaviour
+public class BossHealth : StateMachine
 {
     [Header("Health")]
     [SerializeField] float health = 100;
@@ -48,9 +48,12 @@ public class BossHealth : MonoBehaviour
         return health;
     }
 
-    public void KillBoss()
+    override public void KillEnemy()
     {
         StartCoroutine(sceneLoader.LoadNextScene());
+        explosionSound.Play();
+        GameObject explosionEffect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+        Destroy(explosionEffect, 1);
         foreach(SpriteRenderer child in transform.GetComponentsInChildren<SpriteRenderer>())
         {
             child.gameObject.SetActive(false);

@@ -9,6 +9,7 @@ public class Fire : MonoBehaviour
     [SerializeField] float waterBulletSpeed;
     [SerializeField] float timeWaterBulletActive = 1f;
     [SerializeField] WaterBullet waterBulletPrefab;
+    [SerializeField] AudioSource shootSound;
 
     BulletPool bulletPool;
 
@@ -58,6 +59,7 @@ public class Fire : MonoBehaviour
             {
                 Bullet playerBullet = bulletPool.GetPooledBullet();
                 Rigidbody2D bulletRigidbody2D = playerBullet.GetComponent<Rigidbody2D>();
+                shootSound.Play();
 
                 playerBullet.transform.position = transform.position;
                 playerBullet.gameObject.SetActive(true);

@@ -49,4 +49,9 @@ public class MovingWallBehavior : StateMachine
     {
         return isHitWall;
     }
+
+    override public void KillEnemy()
+    {
+
+    }
 }

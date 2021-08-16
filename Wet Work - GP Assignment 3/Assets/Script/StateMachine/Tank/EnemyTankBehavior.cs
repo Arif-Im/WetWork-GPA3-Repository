@@ -61,15 +61,6 @@ public class EnemyTankBehavior : StateMachine
     {
         movementDirection = enemyTankRigidbody2D.velocity.normalized;
         SetState(GetNewState()); 
-
-        //if (enemyTankRigidbody2D.velocity.x > 0 || enemyTankRigidbody2D.velocity.y > 0)
-        //{
-        //    enemyTankRigidbody2D.velocity *= 0.1f;
-        //}
-        //else if (enemyTankRigidbody2D.velocity.x < 0 || enemyTankRigidbody2D.velocity.y < 0)
-        //{
-        //    enemyTankRigidbody2D.velocity *= 0.1f;
-        //}
     }
 
     public void MoveEnemyTankPatrol()
@@ -98,20 +89,29 @@ public class EnemyTankBehavior : StateMachine
 
     public void EnemyTankFire()
     {
-        if(timeBetweenShots <= 0)
+        var direction = player.transform.position - transform.position.normalized;
+
+        if (timeBetweenShots <= 0)
         {
             Bullet enemyBullet = bulletPool.GetPooledBullet();
             Rigidbody2D bulletRigidbody2D = enemyBullet.GetComponent<Rigidbody2D>();
 
             enemyBullet.transform.position = transform.position;
             enemyBullet.gameObject.SetActive(true);
-            var direction = transform.TransformDirection(player.transform.position - transform.position).normalized;
+
+            shootSound.Play();
             bulletRigidbody2D.velocity = direction * bulletSpeed;
             timeBetweenShots = startingTimeBetweenShots;
         }
         else
         {
             timeBetweenShots -= Time.deltaTime;
+        }
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            enemySprite.transform.rotation = Quaternion.RotateTowards(enemySprite.transform.rotation, toRotation, 1000 * Time.fixedDeltaTime);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -128,7 +128,18 @@ public class EnemyTankBehavior : StateMachine
     {
         if (collision.gameObject.GetComponent<MovingWallBehavior>())
         {
-            gameObject.SetActive(false);
+            KillEnemy();
         }
+    }
+
+    override public void KillEnemy()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+        lineRenderer.enabled = false;
+        enemySprite.SetActive(false);
+        explosionSound.Play();
+        GameObject explosionEffect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+        Destroy(explosionEffect, 1f);
+        enabled = false;
     }
 }

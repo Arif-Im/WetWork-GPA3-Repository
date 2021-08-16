@@ -19,7 +19,7 @@ public class Heart : EnemyHealth
         bossHealth.SetHealth(bossHealth.GetHealth() - damage);
         if (bossHealth.GetHealth() <= 0)
         {
-            bossHealth.KillBoss();
+            bossHealth.KillEnemy();
         }
     }
 }

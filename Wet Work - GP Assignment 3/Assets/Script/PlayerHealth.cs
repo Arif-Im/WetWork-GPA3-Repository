@@ -8,6 +8,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] float health = 100;
     [SerializeField] SceneLoader sceneLoaderPrefab;
     [SerializeField] Slider playerHealthbarPrefab;
+    [SerializeField] AudioSource explosionSound;
+    [SerializeField] GameObject explosionEffectPrefab;
 
     PlayerMovement playerMovement;
     float startHealth;
@@ -60,5 +62,9 @@ public class PlayerHealth : MonoBehaviour
                 return;
         playerMovement.GetPlayerSprite().SetActive(false);
         GetComponent<BoxCollider2D>().enabled = false;
+        explosionSound.Play();
+        playerHealthbar.enabled = false;
+        GameObject explosionEffect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+        Destroy(explosionEffect, 1f);
     }
 }
